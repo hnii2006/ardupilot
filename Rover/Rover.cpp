@@ -64,6 +64,7 @@ const AP_Scheduler::Task Rover::scheduler_tasks[] = {
     SCHED_TASK(update_mission,         50,    200),
     SCHED_TASK(update_logging1,        10,    200),
     SCHED_TASK(update_logging2,        10,    200),
+    SCHED_TASK(update_pulse,        1,      30),
     SCHED_TASK_CLASS(GCS,                 (GCS*)&rover._gcs,       update_receive,                    400,    500),
     SCHED_TASK_CLASS(GCS,                 (GCS*)&rover._gcs,       update_send,                       400,   1000),
     SCHED_TASK_CLASS(RC_Channels,         (RC_Channels*)&rover.g2.rc_channels, read_mode_switch,        7,    200),
@@ -135,6 +136,22 @@ Rover::Rover(void) :
     control_mode(&mode_initializing)
 {
 }
+
+/*
+  generate pulse 2020/4/25 h.nii
+ */
+void Rover::update_pulse(void)
+{
+    int i;
+    i= hal.gpio->read(55);
+    if(i==false){
+      hal.gpio->write(55, true);
+    } else {
+    //hal.scheduler->delay_microseconds(10); 
+      hal.gpio->write(55, false);
+    }
+}
+
 
 // set target location (for use by scripting)
 bool Rover::set_target_location(const Location& target_loc)

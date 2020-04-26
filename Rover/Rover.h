@@ -283,6 +283,7 @@ private:
     void gcs_failsafe_check(void);
     void update_logging1(void);
     void update_logging2(void);
+    void update_pulse(void);//2020/4/25 h.nii
     void one_second_loop(void);
     void update_GPS(void);
     void update_current_mode(void);
