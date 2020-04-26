@@ -142,14 +142,11 @@ Rover::Rover(void) :
  */
 void Rover::update_pulse(void)
 {
-    int i;
+    hal.gpio->pinMode(55, HAL_GPIO_OUTPUT);
+    //hal.gpio->toggle(55);
     i= hal.gpio->read(55);
-    if(i==false){
-      hal.gpio->write(55, true);
-    } else {
-    //hal.scheduler->delay_microseconds(10); 
-      hal.gpio->write(55, false);
-    }
+    hal.scheduler->delay_microseconds(10); 
+    hal.gpio->write(55, false);
 }
 
 
